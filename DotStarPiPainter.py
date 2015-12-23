@@ -236,6 +236,7 @@ speed_pixel = int(num_leds * (duration - min_time) / time_range)
 duration = min_time + time_range * speed_pixel / (num_leds - 1)
 prev_btn = 0
 rep_time = 0.2
+lcd.setBacklight(75);
 
 lcd_update()
 
@@ -248,6 +249,9 @@ try:
         b = btn()
         if b == 1 and lightpaint != None:
             # Paint!
+
+            # Disable the lcd backlight.
+            lcd.setBacklight(0)
 
             if dev is None:  # Time-based
 
@@ -288,6 +292,9 @@ try:
                     if pos > 1.0: break
                     lightpaint.dither(ledBuf, pos)
                     strip.show(ledBuf)
+
+            # Reenable the lcd backlight.
+            lcd.setBacklight(75)
 
             if btn() != pin_go:  # Button released?
                 strip.show(clearBuf)
